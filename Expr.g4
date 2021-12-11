@@ -11,7 +11,7 @@ grammar Expr;
 
 prog: (expr NEWLINE)*;
 
-expr: compound;
+expr: program | query ;
 
 /* Atoms are identifiers that start with a lowercase letter and can contain
  * a combination of lowercase letters, numerals, and underscores.  We are
@@ -78,8 +78,8 @@ conjunction:	compound
 
 /* A rule consists of either a compound or a compound with a conjunction,
  * joined with the :- (implies that) operator.*/
-//rule: 		compound
-//           	| compound ':' conjunction;
+prolog_rule: 		compound
+           	| compound ':-' conjunction;
 
 
 
@@ -87,7 +87,7 @@ conjunction:	compound
  * sequence should be delimited by new lines; if you are using ANTLR, then
  * you should take advantage of the WS rule.
  */
-//program: 	(rule '.')+;
+program: 	(prolog_rule '.')+;
 
 
 /* A query is a conjunction that ends with a question mark. */
@@ -95,5 +95,5 @@ query: 		conjunction '?';
 
 
 NEWLINE: [\r\n]+;
-
+WS: [\t]+ -> skip;
 

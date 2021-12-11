@@ -58,6 +58,18 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConjunction(ExprParser.ConjunctionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ExprParser#prolog_rule}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProlog_rule(ExprParser.Prolog_ruleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ExprParser#program}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProgram(ExprParser.ProgramContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ExprParser#query}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
