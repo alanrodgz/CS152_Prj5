@@ -26,17 +26,21 @@ ATOM: [a-z]([a-z]|[0-9]|'_')* | '0';
 VAR: [A-Z]([a-z]|[A-Z]|[0-9]|'_')*;
 
 /* A term is either an atom or a variable */
-term: ATOM | VAR;
+term: 	ATOM 	# atomTerm
+    | 	VAR	# varTerm
+    ;
 
 /* An element is either a term, a list, or a compound */
-element: 	term
-             | 	list
-             | compound;
-
+element:	term		# termElement
+       | 	list		# listElement
+       | 	compound	# compoundElement
+       ;
+		
 
 /* The <elements> rule consists of one or more elements delimited by a comma */
-elements: 	element
-             | 	element ',' elements;
+elements: 	element			# singleElements
+        | 	element ',' elements	# multiElements
+	;
 
 
 /* A list could have the following forms:
@@ -50,10 +54,10 @@ elements: 	element
 *     the latter part of the pair must either be a list or a variable that
 *     unifies with a list.
 */
-list: 	'[]'
-	| '[' elements ']'
-  	| '[' elements '|' elements ']';
-
+list: 	'[]'					# emptyList
+    | 	'[' elements ']'			# singleElementsList
+    | 	'[' elements '|' elements ']'		# multiElementsList
+    ;
 
 /* A compound starts with either an atom or a period, is followed by the open
  * parenthesis, then is followed by one or more elements delimited by commas,
@@ -68,31 +72,33 @@ list: 	'[]'
  * since lists are represented internally as pairs, and pairs are represented
  * internally using the dot functor.
  */
-compound: 	ATOM '(' elements ')'
-             	| '.(' elements ')';
+compound: ATOM '(' elements ')' # atomCompound
+        | '.(' elements ')'	# dotCompound
+	;
 
 
 /* A conjunction is one or more compounds delimited by commas.*/
-conjunction:	compound
-                | compound ',' conjunction;
+conjunction:	compound			# singleCompoundConjunction
+           | 	compound ',' conjunction	# multiCompoundConjunction
+	   ;
 
 /* A rule consists of either a compound or a compound with a conjunction,
  * joined with the :- (implies that) operator.*/
-prolog_rule: 		compound
-           	| compound ':-' conjunction;
-
+prolog_rule: 	compound			# compoundPrologRule
+           | 	compound ':-' conjunction	# conjunctionPrologRule
+	   ;
 
 
 /* A program is a sequence of rules that end with a period.  Ideally the
  * sequence should be delimited by new lines; if you are using ANTLR, then
  * you should take advantage of the WS rule.
  */
-program: 	(prolog_rule '.')+;
-
+program: (prolog_rule '.')+	# prologProgram
+       ;
 
 /* A query is a conjunction that ends with a question mark. */
-query: 		conjunction '?';
-
+query: 	conjunction '?'		# prologQuery
+     ;
 
 NEWLINE: [\r\n]+;
 WS: [\t]+ -> skip;
