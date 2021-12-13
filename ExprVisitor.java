@@ -22,57 +22,129 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr(ExprParser.ExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#term}.
+	 * Visit a parse tree produced by the {@code atomTerm}
+	 * labeled alternative in {@link ExprParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTerm(ExprParser.TermContext ctx);
+	T visitAtomTerm(ExprParser.AtomTermContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#element}.
+	 * Visit a parse tree produced by the {@code varTerm}
+	 * labeled alternative in {@link ExprParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElement(ExprParser.ElementContext ctx);
+	T visitVarTerm(ExprParser.VarTermContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#elements}.
+	 * Visit a parse tree produced by the {@code termElement}
+	 * labeled alternative in {@link ExprParser#element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElements(ExprParser.ElementsContext ctx);
+	T visitTermElement(ExprParser.TermElementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#list}.
+	 * Visit a parse tree produced by the {@code listElement}
+	 * labeled alternative in {@link ExprParser#element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitList(ExprParser.ListContext ctx);
+	T visitListElement(ExprParser.ListElementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#compound}.
+	 * Visit a parse tree produced by the {@code compoundElement}
+	 * labeled alternative in {@link ExprParser#element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCompound(ExprParser.CompoundContext ctx);
+	T visitCompoundElement(ExprParser.CompoundElementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#conjunction}.
+	 * Visit a parse tree produced by the {@code singleElements}
+	 * labeled alternative in {@link ExprParser#elements}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitConjunction(ExprParser.ConjunctionContext ctx);
+	T visitSingleElements(ExprParser.SingleElementsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#prolog_rule}.
+	 * Visit a parse tree produced by the {@code multiElements}
+	 * labeled alternative in {@link ExprParser#elements}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProlog_rule(ExprParser.Prolog_ruleContext ctx);
+	T visitMultiElements(ExprParser.MultiElementsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#program}.
+	 * Visit a parse tree produced by the {@code emptyList}
+	 * labeled alternative in {@link ExprParser#list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProgram(ExprParser.ProgramContext ctx);
+	T visitEmptyList(ExprParser.EmptyListContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ExprParser#query}.
+	 * Visit a parse tree produced by the {@code singleElementsList}
+	 * labeled alternative in {@link ExprParser#list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitQuery(ExprParser.QueryContext ctx);
+	T visitSingleElementsList(ExprParser.SingleElementsListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiElementsList}
+	 * labeled alternative in {@link ExprParser#list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiElementsList(ExprParser.MultiElementsListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code atomCompound}
+	 * labeled alternative in {@link ExprParser#compound}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomCompound(ExprParser.AtomCompoundContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dotCompound}
+	 * labeled alternative in {@link ExprParser#compound}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDotCompound(ExprParser.DotCompoundContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singleCompoundConjunction}
+	 * labeled alternative in {@link ExprParser#conjunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleCompoundConjunction(ExprParser.SingleCompoundConjunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiCompoundConjunction}
+	 * labeled alternative in {@link ExprParser#conjunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiCompoundConjunction(ExprParser.MultiCompoundConjunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code compoundPrologRule}
+	 * labeled alternative in {@link ExprParser#prolog_rule}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompoundPrologRule(ExprParser.CompoundPrologRuleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code conjunctionPrologRule}
+	 * labeled alternative in {@link ExprParser#prolog_rule}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConjunctionPrologRule(ExprParser.ConjunctionPrologRuleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code prologProgram}
+	 * labeled alternative in {@link ExprParser#program}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrologProgram(ExprParser.PrologProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code prologQuery}
+	 * labeled alternative in {@link ExprParser#query}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrologQuery(ExprParser.PrologQueryContext ctx);
 }

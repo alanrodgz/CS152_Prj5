@@ -9,7 +9,7 @@
 
 grammar Expr;
 
-prog: (expr NEWLINE)*;
+prog: expr NEWLINE ;
 
 expr: program | query ;
 
@@ -100,6 +100,6 @@ program: (prolog_rule '.')+	# prologProgram
 query: 	conjunction '?'		# prologQuery
      ;
 
-NEWLINE: [\r\n]+;
-WS: [\t]+ -> skip;
+NEWLINE: [\n]+;
+WS: [\t\r]+ -> skip;
 
