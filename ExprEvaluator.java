@@ -7,6 +7,9 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 	}
 
 	public String visitPrologProgram(ExprParser.PrologProgramContext ctx) {
+		
+		System.out.println("Visiting the Prolog Program...");
+
 		return "";
 	}
 
@@ -19,6 +22,26 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		System.out.println("op: " + op);
 
 		return op;
+	}
+
+	public String visitConjunctionPrologRule(ExprParser.ConjunctionPrologRuleContext ctx) {
+		
+		System.out.println("Visiting Conjunction Prolog Rule....");
+
+		return "";
+	}
+
+	public String visitSingleCompoundConjunction(ExprParser.SingleCompoundConjunctionContext ctx) {
+		System.out.println("Visiting Singlee Compound Conjuction...");
+
+		return "";
+	}
+
+	public String visitMultiCompoundConjunction(ExprParser.MultiCompoundConjunctionContext ctx) {
+		
+		System.out.println("Vising Multi Compound Conjunction....");
+
+		return "";
 	}
 	
 

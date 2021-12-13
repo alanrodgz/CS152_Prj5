@@ -101,5 +101,5 @@ query: 	conjunction '?'		# prologQuery
      ;
 
 NEWLINE: [\n]+;
-WS: [\t\r]+ -> skip;
+WS: [ \t\r]+ -> skip;
 

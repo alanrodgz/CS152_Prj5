@@ -7,8 +7,26 @@ public class PrologInterpreter {
 
 	public static void main(String[] args) throws IOException {
 
+		//
+		// Read From File 
+		//
+
+		// Ensure that the use entered a prolog file
+		if(args.length < 1){
+			System.out.println("You have not entered a prolog file...");
+			//System.out.println("Do you wish to continue? ");
+			return;
+		} else if(args.length > 1){
+			System.out.println("You have entered too many files!");
+			return;
+		}
+
+		Map<String, Set<String>> factMap = new HashMap<>();
+		FileReader fr = new FileReader(args[0]);
+
+
         	BufferedReader in =
-         	 new BufferedReader(new InputStreamReader(System.in));
+         	 new BufferedReader(fr);
         	CharStream inputStream = CharStreams.fromReader(in);
         	ExprLexer lexer = new ExprLexer(inputStream);
 
@@ -33,6 +51,20 @@ public class PrologInterpreter {
 		String result = evaluator.visit(tree);
 
 		System.out.println("All systems in check result: " + result);
+
+		in.close();
+		
+		//
+		// Prolog emulate
+		//
+
+		System.out.print("prolog> ");
+
+		BufferedReader buffReader = new BufferedReader(new InputStreamReader(System.in)); 
+		CharStream myCharStream = CharStreams.fromReader(buffReader);
+		
+
+		System.out.println("Continue to process query...");
 
     	}
 
