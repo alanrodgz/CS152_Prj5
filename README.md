@@ -1,9 +1,9 @@
 # CS152_Prj5
 
 Compling:
-antlr4 -no-listener -visitor Expr.g4
-javac *.java
-grun Expr prog -gui
+antlr4 -no-listener -visitor Expr.g4. /n
+javac *.java /n
+grun Expr prog -gui /n
 
 Introduction
 Your task for Project #5 is to write a basic Prolog interpreter that reads in a Prolog source code file that contains facts and accepts queries from the command line.
