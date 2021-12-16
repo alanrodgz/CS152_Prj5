@@ -6,10 +6,6 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 
 	public Map<String, Set<String>> getMap() {return myMap;}
 
-	public void addToMap(String statement){
-
-	}
-
 	public String visitProg(ExprParser.ProgContext ctx){
 
 		List<ExprParser.ExprContext> myList = ctx.expr();
@@ -57,21 +53,60 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		System.out.println("Visiting Conjunction Prolog Rule...");
 		
 		String op = ctx.getChild(0).getText();
+		
 
 		System.out.println("op: " + op);
 
 		return op;
 	}
 
+	
 	public String visitAtomCompound(ExprParser.AtomCompoundContext ctx){
 
 		System.out.println("Visiting Atom Compound...");
 
+
+		// 0 1 2 3 4 
+		// 0 loves
+		// 1 (
+		// 2 )
+		// 3 romeo
+		// 4 juliet
+
 		String op = ctx.getChild(0).getText();
-		System.out.println("atom: " + op + "\n");
+		myMap.put(op, new HashSet<>());
+
+		int childSize = ctx.getChildCount();
+		Set<String> children = new HashSet<>();
+		for(int i = 1; i < childSize; i++) children.add(ctx.getChild(i).getText());
+
+		System.out.println("op: " + op);
+
+		System.out.println("children_size: " + childSize);
+		System.out.println("children: " + children);
+		System.out.println("lastChild: " + ctx.getChild(2).getText());
+
+		String[] elements = ctx.getChild(2).getText().split(",");
+
+		System.out.println("elements: " + Arrays.toString(elements));
+		System.out.println("first: " + elements[0]);
+
+		Set<String> finalSet = new HashSet<>();
+		Collections.addAll(finalSet, elements);
+
+		System.out.println("finalSet: " + finalSet);
+
+		myMap.put(op, finalSet);
+
+		System.out.println("myMap: " + myMap);
+
+		System.out.println();
 
 		return op;
 	}
+	
+
+
 
 	public String visitPrologQuery(ExprParser.PrologQueryContext ctx){
 
