@@ -2,13 +2,15 @@ import java.util.*;
 
 public class ExprEvaluator extends ExprBaseVisitor<String>{
 
-	Map<String, Set<String>> myMap = new HashMap<>();
+	
+	List<Map<String, List<String>>> myWorldMap = new ArrayList<>();
 
-	public Map<String, Set<String>> getMap() {return myMap;}
+	public Map<String, List<String>> getMap() {return null;}
+	
 
 	public String visitProg(ExprParser.ProgContext ctx){
 
-		List<ExprParser.ExprContext> myList = Collections.singletonList(ctx.expr());
+		List<ExprParser.ExprContext> myList = ctx.expr();
 		String ans = "";
 		String temp = "";
 
@@ -74,7 +76,8 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		// 4 juliet
 
 		String op = ctx.getChild(0).getText();
-		myMap.put(op, new HashSet<>());
+		Map<String, List<String>> myMap = new HashMap<>();
+
 
 		int childSize = ctx.getChildCount();
 		Set<String> children = new HashSet<>();
@@ -91,16 +94,24 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		System.out.println("elements: " + Arrays.toString(elements));
 		System.out.println("first: " + elements[0]);
 
-		Set<String> finalSet = new HashSet<>();
-		Collections.addAll(finalSet, elements);
+		//Set<String> finalSet = new HashSet<>();
+		//Collections.addAll(finalSet, elements);
 
-		System.out.println("finalSet: " + finalSet);
+		//System.out.println("finalSet: " + finalSet);
+		List<String> listElems = new ArrayList<>();
+		Collections.addAll(listElems, elements);
 
-		myMap.put(op, finalSet);
+		myMap.put(op, listElems);
+		myWorldMap.add(myMap);
+		
 
 		System.out.println("myMap: " + myMap);
+		System.out.println("myWordMap: " + myWorldMap);  
+		
 
-		System.out.println();
+		System.out.println("\n");
+
+		//myMap.clear(); 
 
 		return op;
 	}

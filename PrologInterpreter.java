@@ -21,37 +21,40 @@ public class PrologInterpreter {
 			return;
 		}
 
-		Map<String, Set<String>> factMap = new HashMap<>();
+		Map<String, Map<String, Set<String>>> worldMap = new HashMap<>();
+		Map<String, List<String>> factMap = new HashMap<>();
 		FileReader fr = new FileReader(args[0]);
 
 
-        	BufferedReader in =
-         	 new BufferedReader(fr);
-        	CharStream inputStream = CharStreams.fromReader(in);
-        	ExprLexer lexer = new ExprLexer(inputStream);
+		BufferedReader in =
+			new BufferedReader(fr);
+		CharStream inputStream = CharStreams.fromReader(in);
+		ExprLexer lexer = new ExprLexer(inputStream);
 
-        	lexer.addErrorListener(new BaseErrorListener() {
-            		@Override
-            		public void syntaxError(Recognizer<?, ?> r, Object o, int l, int c,
-             		String msg, RecognitionException e) {
-                		throw new RuntimeException(e);
-            		}
-        	});
+		lexer.addErrorListener(new BaseErrorListener() {
+				@Override
+				public void syntaxError(Recognizer<?, ?> r, Object o, int l, int c,
+				String msg, RecognitionException e) {
+					throw new RuntimeException(e);
+				}
+		});
 
-        	CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-        	ExprParser parser = new ExprParser(commonTokenStream);
-        	parser.setErrorHandler(new BailErrorStrategy());
+		CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+		ExprParser parser = new ExprParser(commonTokenStream);
+		parser.setErrorHandler(new BailErrorStrategy());
 
-        	ParseTree tree = parser.prog();
+		ParseTree tree = parser.prog();
 
-        	ExprEvaluator evaluator = new ExprEvaluator();
-        	//Double result = evaluator.visit(tree);
-        	//System.out.println(result);
+		ExprEvaluator evaluator = new ExprEvaluator();
+		//Double result = evaluator.visit(tree);
+		//System.out.println(result);
 
 
-		// factMap = evaluator.getMap();
+		factMap = evaluator.getMap();
 
 		String result = evaluator.visit(tree);
+
+		System.out.println("factMap: " + factMap);
 
 		System.out.println("All systems in check result: " + result);
 
@@ -67,11 +70,32 @@ public class PrologInterpreter {
 			try {
 				Scanner inputReader = new Scanner(new InputStreamReader(System.in));
 				String inputString = inputReader.nextLine();
+				System.out.println("input: " + inputString);
+				CharStream stream2 = new CharStream(inputString);
+				ExprLexer lexer2 = new ExprLexer(stream2);
+
+				lexer2.addErrorListener(new BaseErrorListener() {
+					@Override
+					public void syntaxError(Recognizer<?, ?> r, Object o, int l, int c,
+					String msg, RecognitionException e) {
+						throw new RuntimeException(e);
+					}
+				});
+
+				CommonTokenStream commonTokenStream2 = new CommonTokenStream(lexer2);
+				ExprParser parser2 = new ExprParser(commonTokenStream2);
+				parser2.setErrorHandler(new BailErrorStrategy());
+		
+				ParseTree tree2 = parser2.prog();
+		
+				ExprEvaluator evaluator2 = new ExprEvaluator();
 			} catch (java.util.NoSuchElementException e){
 				break;
 			}
 
 			System.out.println("Continue to process query...");
 		}
-	}
+			
+    	}
+
 }
