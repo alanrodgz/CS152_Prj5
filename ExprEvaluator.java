@@ -8,7 +8,7 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 
 	public String visitProg(ExprParser.ProgContext ctx){
 
-		List<ExprParser.ExprContext> myList = ctx.expr();
+		List<ExprParser.ExprContext> myList = Collections.singletonList(ctx.expr());
 		String ans = "";
 		String temp = "";
 

@@ -61,14 +61,17 @@ public class PrologInterpreter {
 		// Prolog emulate
 		//
 
-		/*
-		System.out.print("prolog> ");
+		while (true) {
+			System.out.print("prolog> ");
 
-		BufferedReader buffReader = new BufferedReader(new InputStreamReader(System.in)); 
-		String inputString = buffReader.readLine();	
+			try {
+				Scanner inputReader = new Scanner(new InputStreamReader(System.in));
+				String inputString = inputReader.nextLine();
+			} catch (java.util.NoSuchElementException e){
+				break;
+			}
 
-		System.out.println("Continue to process query...");
-			*/
-    	}
-
+			System.out.println("Continue to process query...");
+		}
+	}
 }
