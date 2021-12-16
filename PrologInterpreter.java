@@ -3,6 +3,7 @@ import org.antlr.v4.runtime.tree.*;
 import java.io.*;
 import java.util.*;
 
+
 public class PrologInterpreter {
 
 	public static void main(String[] args) throws IOException {
@@ -64,31 +65,72 @@ public class PrologInterpreter {
 		// Prolog emulate
 		//
 
-		while (true) {
+		String inputString = "";
+
+		while (!inputString.equals("q")) {
 			System.out.print("prolog> ");
 
 			try {
 				Scanner inputReader = new Scanner(new InputStreamReader(System.in));
-				String inputString = inputReader.nextLine();
+				inputString = inputReader.nextLine();
 				System.out.println("input: " + inputString);
-				CharStream stream2 = new CharStream(inputString);
-				ExprLexer lexer2 = new ExprLexer(stream2);
+				inputString += "\n";
+
+				// Create a FileWriter object
+				// to write in the file
+				FileWriter fWriter = new FileWriter("buff.prolog");
+	
+				// Writing into file
+				// Note: The content taken above inside the
+				// string
+				fWriter.write(inputString);
+	
+				// Closing the file writing connection
+				fWriter.close();
+	
+				
+				//
+				// Query Statement from buff file
+				//
+
+				FileReader fr2 = new FileReader("buff.prolog");
+
+
+				BufferedReader in2 =
+					new BufferedReader(fr2);
+				CharStream inputStream2 = CharStreams.fromReader(in2);
+				ExprLexer lexer2 = new ExprLexer(inputStream2);
 
 				lexer2.addErrorListener(new BaseErrorListener() {
-					@Override
-					public void syntaxError(Recognizer<?, ?> r, Object o, int l, int c,
-					String msg, RecognitionException e) {
-						throw new RuntimeException(e);
-					}
+						@Override
+						public void syntaxError(Recognizer<?, ?> r, Object o, int l, int c,
+						String msg, RecognitionException e) {
+							throw new RuntimeException(e);
+						}
 				});
 
 				CommonTokenStream commonTokenStream2 = new CommonTokenStream(lexer2);
 				ExprParser parser2 = new ExprParser(commonTokenStream2);
-				parser2.setErrorHandler(new BailErrorStrategy());
-		
+				parser.setErrorHandler(new BailErrorStrategy());
+
 				ParseTree tree2 = parser2.prog();
-		
+
 				ExprEvaluator evaluator2 = new ExprEvaluator();
+				//Double result = evaluator.visit(tree);
+				//System.out.println(result);
+
+
+		
+
+				String result2 = evaluator2.visit(tree2);
+
+		
+
+				System.out.println("All systems in check result: " + result2);
+
+				in2.close();
+
+				
 			} catch (java.util.NoSuchElementException e){
 				break;
 			}
