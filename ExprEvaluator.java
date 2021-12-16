@@ -1,11 +1,16 @@
 import java.util.*;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.*;
 
 public class ExprEvaluator extends ExprBaseVisitor<String>{
 
-	
 	List<Map<String, List<String>>> myWorldMap = new ArrayList<>();
 
-	public Map<String, List<String>> getMap() {return null;}
+	public Map<Object, Object> getMap() {
+
+		return null;
+		//
+	}
 	
 
 	public String visitProg(ExprParser.ProgContext ctx){
@@ -55,14 +60,51 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		System.out.println("Visiting Conjunction Prolog Rule...");
 		
 		String op = ctx.getChild(0).getText();
-		
 
+		// According to grammar, conjunctionPrologRule is:
+		// compound ':-' conjunction
+		// What these tell us is that the children of this ExprParser context are:
+		// 0: compound
+		// 1: :-
+		// 2: conjunction
 		System.out.println("op: " + op);
+		System.out.println("child 1: " + ctx.getChild(1).getText());
+		System.out.println("child 2: " + ctx.getChild(2).getText());
+
+		modularize(ctx.getChild(0));
+		modularize(ctx.getChild(2));
 
 		return op;
 	}
 
-	
+	public boolean modularize(ParseTree pt){
+
+		String input = pt.getText();
+		// Ex 1: pt = loves(romeo,juliet),loves(adam,eve)
+		// Ex 2: pt = loves(romeo,juliet)
+		String[] modified = input.split("\\(|\\),|\\)");
+		// Ex 1: 0 = loves, 1 = romeo,juliet, 2 = loves, 3 = adam,eve
+		// Ex 2: 0 = loves, 1 = romeo,juliet
+
+		System.out.println(modified.length);
+
+		// This loop accounts for the possibility that a conjunction may have multiple elements
+		for (int index = 0; index < modified.length; index += 2){
+			Map<String, List<String>> myMap = new HashMap<>();
+			String[] elements = modified[index + 1].split(",");
+
+			List<String> listElems = new ArrayList<>();
+			Collections.addAll(listElems, elements);
+
+			myMap.put(modified[index], listElems);
+			myWorldMap.add(myMap);
+
+			System.out.println("myMap: " + myMap);
+			System.out.println("myWorldMap: " + myWorldMap);
+		}
+		return true;
+	}
+
 	public String visitAtomCompound(ExprParser.AtomCompoundContext ctx){
 
 		System.out.println("Visiting Atom Compound...");
@@ -106,7 +148,7 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		
 
 		System.out.println("myMap: " + myMap);
-		System.out.println("myWordMap: " + myWorldMap);  
+		System.out.println("myWorldMap: " + myWorldMap);
 		
 
 		System.out.println("\n");
