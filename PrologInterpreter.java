@@ -48,6 +48,9 @@ public class PrologInterpreter {
         	//Double result = evaluator.visit(tree);
         	//System.out.println(result);
 
+
+		// factMap = evaluator.getMap();
+
 		String result = evaluator.visit(tree);
 
 		System.out.println("All systems in check result: " + result);
@@ -58,14 +61,14 @@ public class PrologInterpreter {
 		// Prolog emulate
 		//
 
+		/*
 		System.out.print("prolog> ");
 
 		BufferedReader buffReader = new BufferedReader(new InputStreamReader(System.in)); 
-		CharStream myCharStream = CharStreams.fromReader(buffReader);
-		
+		String inputString = buffReader.readLine();	
 
 		System.out.println("Continue to process query...");
-
+			*/
     	}
 
 }

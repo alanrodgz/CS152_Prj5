@@ -2,110 +2,123 @@ import java.util.*;
 
 public class ExprEvaluator extends ExprBaseVisitor<String>{
 
+	Map<String, Set<String>> myMap = new HashMap<>();
+
+	public Map<String, Set<String>> getMap() {return myMap;}
+
+	public void addToMap(String statement){
+
+	}
+
 	public String visitProg(ExprParser.ProgContext ctx){
-		System.out.println("Visiting Prog....");
-		return visit(ctx.expr());
+
+		List<ExprParser.ExprContext> myList = ctx.expr();
+		String ans = "";
+		String temp = "";
+
+		for(ExprParser.ExprContext elem : myList){
+			temp = visit(elem);
+			ans += temp + "\n";
+		}
+
+		return ans;
 	}
 
+	
 
-	public String visitExpr(ExprParser.ExprContext ctx) {
-		System.out.println("Visiting Expr....");
-		return "";
-	}
+	/*
+	public String visitPrologProgram(ExprParser.PrologProgramContext ctx) {
+		
+		System.out.println("Visiting the Prolog Program...");
 
-
-	public String visitAtomTerm(ExprParser.AtomTermContext ctx) {
-		System.out.println("Visiting Atom Term....");
-		return "";
-	}
-	public String visitVarTerm(ExprParser.VarTermContext ctx) {
-		System.out.println("Visiting Var Term....");
-		return "";
-	}
-
-
-	public String visitTermElement(ExprParser.TermElementContext ctx) {
-		System.out.println("Visiting Term Element....");
-		return "";
-	}
-	public String visitListElement(ExprParser.ListElementContext ctx) {
-		System.out.println("Visiting List Element....");
-		return "";
-	}
-	public String visitCompoundElement(ExprParser.CompoundElementContext ctx) {
-		System.out.println("Visiting Compound Element....");
-		return "";
-	}
-
-
-	public String visitSingleElements(ExprParser.SingleElementsContext ctx) {
-		System.out.println("Visiting Single Elements....");
-		return "";
-	}
-	public String visitMultiElements(ExprParser.MultiElementsContext ctx) {
-		System.out.println("Visiting Multi Elements....");
-		return "";
-	}
-
-
-	public String visitEmptyList(ExprParser.EmptyListContext ctx) {
-		System.out.println("Visiting Empty List....");
-		return "";
-	}
-	public String visitSingleElementsList(ExprParser.SingleElementsListContext ctx) {
-		System.out.println("Visiting Single Elements List....");
-		return "";
-	}
-	public String visitMultiElementsList(ExprParser.MultiElementsListContext ctx) {
-		System.out.println("Visiting Multi Elements List....");
-		return "";
-	}
-
-
-	public String visitAtomCompound(ExprParser.AtomCompoundContext ctx) {
-		System.out.println("Visiting Atom Compound....");
-		return "";
-	}
-	public String visitDotCompound(ExprParser.DotCompoundContext ctx) {
-		System.out.println("Visiting Dot Compound....");
-		return "";
-	}
-
-
-	public String visitSingleCompoundConjunction(ExprParser.SingleCompoundConjunctionContext ctx) {
-		System.out.println("Visiting Single Compound Conjuction....");
-		return "";
-	}
-	public String visitMultiCompoundConjunction(ExprParser.MultiCompoundConjunctionContext ctx) {
-		System.out.println("Visiting Multi Compound Conjunction....");
-		return "";
-	}
-
-
-	public String visitCompoundPrologRule(ExprParser.CompoundPrologRuleContext ctx) {
-		System.out.println("Visiting Compound Prolog Rule....");
 		String op = ctx.getChild(0).getText();
-		System.out.println("op: " + op);
+
+		System.out.println("op: " + op + "\n");
+
+		//String op2 = visitCompoundPrologRule(ctx.getChild(0));
+		//System.out.println("op2: " + op2);
+
 		return op;
 	}
+	*/
+
+	/*
+	public String visitCompoundPrologRule(ExprParser.CompoundPrologRuleContext ctx){
+		System.out.println("Visiting the Compound Prolog Rule...");
+		String op = ctx.getChild(0).getText();
+
+		System.out.println("op: " + op);
+
+		return op;
+	}
+	*/
+
 	public String visitConjunctionPrologRule(ExprParser.ConjunctionPrologRuleContext ctx) {
-		System.out.println("Visiting Conjunction Prolog Rule....");
-		return "";
+		System.out.println("Visiting Conjunction Prolog Rule...");
+		
+		String op = ctx.getChild(0).getText();
+
+		System.out.println("op: " + op);
+
+		return op;
 	}
 
+	public String visitAtomCompound(ExprParser.AtomCompoundContext ctx){
 
-	public String visitPrologProgram(ExprParser.PrologProgramContext ctx) {
-		System.out.println("Visiting Prolog Program....");
-		return "";
+		System.out.println("Visiting Atom Compound...");
+
+		String op = ctx.getChild(0).getText();
+		System.out.println("atom: " + op + "\n");
+
+		return op;
 	}
-
 
 	public String visitPrologQuery(ExprParser.PrologQueryContext ctx){
-		System.out.println("Visiting Prolog Query....");
+
+		System.out.println("Visiting the Prolog Query....");
+
 		String op = ctx.getChild(0).getText();
+
 		System.out.println("op: " + op);
+
 		return op;
 	}
+
+	/*
+	public String visitCompoundPrologRule(ExprParser.CompoundPrologRuleContext ctx) { 
+	
+		System.out.println("Visiting the Compund Prolog Rule....");
+
+		String op = ctx.getChild(0).getText();
+
+		System.out.println("op: " + op);
+
+		return op;
+	}
+
+	public String visitConjunctionPrologRule(ExprParser.ConjunctionPrologRuleContext ctx) {
+		
+		System.out.println("Visiting Conjunction Prolog Rule....");
+
+		return "";
+	}
+
+	public String visitSingleCompoundConjunction(ExprParser.SingleCompoundConjunctionContext ctx) {
+		System.out.println("Visiting Singlee Compound Conjuction...");
+
+		return "";
+	}
+
+	public String visitMultiCompoundConjunction(ExprParser.MultiCompoundConjunctionContext ctx) {
+		
+		System.out.println("Vising Multi Compound Conjunction....");
+
+		return "";
+	}
+	
+
+	*/
+
 }
 
 
