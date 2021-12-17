@@ -6,7 +6,7 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 
 	List<Map<String, List<String>>> myWorldMap = new ArrayList<>();
 
-	public Map<Object, Object> getMap() {
+	public List<Map<String,List<String>>> getMap() {
 
 		return null;
 		//
@@ -56,6 +56,17 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 	}
 	*/
 
+	/*
+	public String visitMultiElementsList(ExprParser.MultiElementsListContext ctx) {
+		System.out.println("Visiting Multi Elements List");
+
+		String op = ctx.getChild(0).getText();
+		System.out.println("op: " + op);
+
+		return op;
+	}
+	 */
+
 	public String visitConjunctionPrologRule(ExprParser.ConjunctionPrologRuleContext ctx) {
 		System.out.println("Visiting Conjunction Prolog Rule...");
 		
@@ -77,7 +88,7 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		return op;
 	}
 
-	public boolean modularize(ParseTree pt){
+	public boolean modularize(ParseTree pt) {
 
 		String input = pt.getText();
 		// Ex 1: pt = loves(romeo,juliet),loves(adam,eve)
@@ -89,7 +100,7 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 		System.out.println(modified.length);
 
 		// This loop accounts for the possibility that a conjunction may have multiple elements
-		for (int index = 0; index < modified.length; index += 2){
+		for (int index = 0; index < modified.length; index += 2) {
 			Map<String, List<String>> myMap = new HashMap<>();
 			String[] elements = modified[index + 1].split(",");
 
@@ -109,6 +120,41 @@ public class ExprEvaluator extends ExprBaseVisitor<String>{
 
 		System.out.println("Visiting Atom Compound...");
 
+
+		// ex: flip([], Ys, Ys).
+		// We have three potential list inputs:
+		// Empty list: []
+		// single Elements list: [elements]
+		// multi Elements list: [elements|elements]
+
+		// if splitting along | returns an array of size 2, then it's multi elements
+		// if splitting along | returns an array of size 1, then it's single elements or empty
+		// if the array of size 1 is only 2 characters long, it's an empty list
+
+		String atom = ctx.getChild(0).getText();
+
+		if (.contains("[")) {
+			.replace("[", "");
+			.replace("]", "");
+			String[] toList = currentChild.split("\\|");
+
+			List<String> listElems = new ArrayList<>();
+			Collections.addAll(listElems, toList);
+
+			Map<String, List<String>> myMap = new HashMap<>();
+			myMap.put(atom, listElems);
+			myWorldMap.add(myMap);
+		}
+
+		for (int index = 1; index < ctx.getChildCount(); index++){
+			String currentChild = ctx.getChild(index).getText();
+
+
+			else{
+				modularize();
+			}
+
+		}
 
 		// 0 1 2 3 4 
 		// 0 loves
